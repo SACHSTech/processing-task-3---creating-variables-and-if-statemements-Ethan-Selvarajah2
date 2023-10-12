@@ -1,36 +1,49 @@
 import processing.core.PApplet;
 
+import java.util.Random;
+
 public class Sketch extends PApplet {
 	
-	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
   public void settings() {
-	// put your size call here
-    size(400, 400);
+    size(displayWidth, displayHeight);
   }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
   public void setup() {
-    background(210, 255, 173);
+    background(0, 0, 0);
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
   public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
+    Random myRandom = new Random();
+    int xLocation = myRandom.nextInt(displayWidth);
+    int yLocation = myRandom.nextInt(displayHeight);
 
-    stroke(255);
-    line(50, 125, 70, 50);  
+    // Background colour changes based on the location of the circle
+    if (xLocation < (0.5 * displayWidth) && yLocation < (0.5 * displayHeight)) {
+      background(255, 61, 152); // Upper-left quadrant
+    } else if (xLocation >= (0.5 * displayWidth) && yLocation < (0.5 * displayHeight)) {
+      background(255, 239, 61); // Upper-right quadrant
+    } else if (xLocation < (0.5 * displayWidth) && yLocation >= (0.5 * displayHeight)) {
+      background(61, 255, 87); // Lower-left quadrant
+    } else {
+      background(34, 90, 212); // Lower-right quadrant
+    }
+
+    // Circle colour changes based on the location of the circle
+    if (xLocation < (0.5 * displayWidth) || yLocation < (0.5 * displayHeight)) {
+      fill(255);
+    } else {
+      fill(0);
+    }
+
+    noStroke();
+    ellipse(xLocation, yLocation, 50, 50);
+
+    rect(xLocation - 100, yLocation - 200, 15, 15);
+
+    // Displays the current time
+    String time = hour() + ":" + minute() + ":" + second();
+    fill(0);
+    textSize(16);
+    text(time, displayWidth / 2, 100);
   }
-  
-  // define other methods down here.
 }
